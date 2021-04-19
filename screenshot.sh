@@ -8,7 +8,7 @@ if [[ "$1" == "clipboard" ]]; then
 	clip=1
 else
 	echo "we are in else statemtn"
-	isclip=$(printf "To Clipboard\nTo File" | rofi -dmenu)
+	isclip=$(printf "To Clipboard\nTo File" | rofi -dmenu -only-match -lines 3)
 	if [[ "$isclip" == "To Clipboard" ]]; then
 		clip=1
 	fi
@@ -18,6 +18,6 @@ if [[ "$clip" == 1 ]]; then
 	xclip -selection clipboard -t "image/png" -i /tmp/file.png
 	rm /tmp/file.png
 else
-	filepath=$(rofi -dmenu)
-	mv /tmp/file.png "$HOME/$filepath"
+	filepath=$(rofi -dmenu -lines 0 -mesg "Enter file name (default is in Pictures directory)")
+	mv /tmp/file.png "$HOME/Pictures/$filepath"
 fi
